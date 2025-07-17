@@ -4,6 +4,7 @@ credentials:
       email: ecom.juliette@gmail.com
       name: Juliette
       password: etteiluj1991
+      role: admin 
 
 cookie:
   name: automatch_cookie
