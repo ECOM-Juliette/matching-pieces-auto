@@ -133,6 +133,11 @@ if authentifie:
 else:
     st.warning("Veuillez vous connecter pour accéder à l’application.")
 
+if st.session_state["username"] == "admin":
+    st.subheader("🛠️ Gérer les utilisateurs existants")
+
+    with open('config.yaml', 'r') as file:
+        config = yaml.safe_load(file)
 
         st.subheader("🛠️ Gérer les utilisateurs existants")
 
