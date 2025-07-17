@@ -49,7 +49,7 @@ footer {
 st.markdown(modern_css, unsafe_allow_html=True)
 
 # Logo centré
-logo = Image.open("logo-automatch.png")
+logo = Image.open("logo-automatch-bleu.png")
 st.image(logo, width=200)
 
 # Titre
