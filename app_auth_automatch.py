@@ -1,15 +1,14 @@
 import streamlit as st
-import yaml
-from yaml.loader import SafeLoader
-import streamlit_authenticator as stauth
-from streamlit_authenticator import Authenticate
 import pandas as pd
 from io import BytesIO
 from PIL import Image
+import yaml
+from streamlit_authenticator import Authenticate
+from passlib.hash import pbkdf2_sha256
 
-# Charger la configuration
+# --- Authentification ---
 with open("config.yaml") as file:
-    config = yaml.load(file, Loader=SafeLoader)
+    config = yaml.safe_load(file)
 
 authenticator = Authenticate(
     config['credentials'],
@@ -18,15 +17,13 @@ authenticator = Authenticate(
     config['cookie']['expiry_days']
 )
 
-authenticator.login()
+name, authentication_status, username = authenticator.login("Se connecter", "main")
 
-if st.session_state["authentication_status"]:
-    st.success(f"Bienvenue {st.session_state['name']} 👋")
-
-    # App Automatch intégrée ici
+if authentication_status:
     st.set_page_config(page_title="AUTOMATCH - Outil de Matching de Pièces Auto", layout="centered")
 
-    custom_css = """
+    # CSS et logo
+    st.markdown("""
     <style>
     body {
         background-color: #F5F5F5;
@@ -67,8 +64,7 @@ if st.session_state["authentication_status"]:
         padding-top: 0 !important;
     }
     </style>
-    """
-    st.markdown(custom_css, unsafe_allow_html=True)
+    """, unsafe_allow_html=True)
 
     st.markdown('<div class="center-logo">', unsafe_allow_html=True)
     logo = Image.open("logo-automatch-bleu.png")
@@ -117,7 +113,7 @@ if st.session_state["authentication_status"]:
 
     st.markdown('<footer>© 2025 AUTOMATCH - Tous droits réservés</footer>', unsafe_allow_html=True)
 
-elif st.session_state["authentication_status"] is False:
-    st.error("Nom d'utilisateur ou mot de passe incorrect")
-elif st.session_state["authentication_status"] is None:
-    st.warning("Veuillez entrer vos identifiants")
+elif authentication_status is False:
+    st.error("Nom d’utilisateur ou mot de passe incorrect.")
+elif authentication_status is None:
+    st.warning("Veuillez entrer vos identifiants.")
