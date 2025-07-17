@@ -4,6 +4,7 @@ credentials:
       email: ecom.juliette@gmail.com
       name: Juliette
       password: $2a$12$b37ETOS80sbmuXyZZ2Wr1.vgQQ3fvvZZGbXtgMSpRdw2kBXbCMWaa
+      role: admin
 cookie:
   name: authenticator
   key: some_secret_key
