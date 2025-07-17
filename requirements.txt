@@ -1,8 +1,7 @@
-
 streamlit
 pandas
 openpyxl
 Pillow
 pyyaml
-streamlit-authenticator
 passlib
+streamlit-authenticator==0.2.2
