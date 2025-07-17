@@ -3,7 +3,7 @@ credentials:
     ecom.juliette@gmail.com:
       email: ecom.juliette@gmail.com
       name: Juliette
-      password: etteiluj1991
+      password: $2a$12$b37ETOS80sbmuXyZZ2Wr1.vgQQ3fvvZZGbXtgMSpRdw2kBXbCMWaa
 cookie:
   name: authenticator
   key: some_secret_key
