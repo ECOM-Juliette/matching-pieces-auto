@@ -53,17 +53,17 @@ logo = Image.open("logo-automatch.png")
 st.image(logo, width=200)
 
 # Titre
-st.markdown("<h1>AUTOMATCH – Outil de Matching de Pièces Auto</h1>", unsafe_allow_html=True)
+st.markdown("<h1>Outil de Matching de Pièces Auto</h1>", unsafe_allow_html=True)
 
 # Section principale
 with st.container():
     st.markdown('<div class="upload-section">', unsafe_allow_html=True)
 
     # Upload fichiers
-    st.markdown('<div class="label">📂 Téléversez le premier fichier Excel</div>', unsafe_allow_html=True)
+    st.markdown('<div class="label">Téléversez le premier fichier Excel</div>', unsafe_allow_html=True)
     fichier1 = st.file_uploader("", type=["xlsx"], key="fichier1")
 
-    st.markdown('<div class="label">📂 Téléversez le second fichier Excel</div>', unsafe_allow_html=True)
+    st.markdown('<div class="label">Téléversez le second fichier Excel</div>', unsafe_allow_html=True)
     fichier2 = st.file_uploader("", type=["xlsx"], key="fichier2")
 
     if fichier1 and fichier2:
