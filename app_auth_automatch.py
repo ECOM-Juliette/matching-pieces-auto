@@ -17,7 +17,7 @@ authenticator = Authenticate(
     config['cookie']['expiry_days']
 )
 
-name, authentication_status, username = authenticator.login("Se connecter", "main")
+name, authentication_status, username = authenticator.login("Se connecter", location="main")
 
 if authentication_status:
     st.set_page_config(page_title="AUTOMATCH - Outil de Matching de Pièces Auto", layout="centered")
