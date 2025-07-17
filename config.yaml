@@ -3,10 +3,8 @@ credentials:
     ecom.juliette@gmail.com:
       email: ecom.juliette@gmail.com
       name: Juliette
-      password: etteiluj1991
-      role: admin 
-
+      password: $2b$12$GoV9jHnMVo/bbRHYk9qBgOGkw4a1d7zsbzY8sS48uKZ6pMDJiyR0y
 cookie:
-  name: automatch_cookie
-  key: some_signature_key
+  name: authenticator
+  key: some_secret_key
   expiry_days: 30
