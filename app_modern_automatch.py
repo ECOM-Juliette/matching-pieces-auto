@@ -7,7 +7,7 @@ from PIL import Image
 # Configuration de la page
 st.set_page_config(page_title="AUTOMATCH - Outil de Matching de Pièces Auto", layout="centered")
 
-# CSS personnalisé : fond clair, logo centré, style épuré
+# CSS personnalisé pour style moderne, logo centré, suppression du bloc vide
 custom_css = """
 <style>
 body {
@@ -17,7 +17,7 @@ body {
 h1 {
     text-align: center;
     color: #333333;
-    margin-bottom: 20px;
+    margin-bottom: 30px;
 }
 .upload-section {
     background-color: #FFFFFF;
@@ -43,37 +43,40 @@ footer {
     display: flex;
     justify-content: center;
     margin-top: 20px;
-    margin-bottom: 10px;
+    margin-bottom: 0;
+}
+.block-container > div:nth-child(2) {
+    padding-top: 0 !important;
 }
 </style>
 """
 st.markdown(custom_css, unsafe_allow_html=True)
 
-# Logo centré
+# Logo centré avec hauteur personnalisée
 st.markdown('<div class="center-logo">', unsafe_allow_html=True)
 logo = Image.open("logo-automatch-bleu.png")
-st.image(logo, width=240)
+st.image(logo, width=500)
 st.markdown('</div>', unsafe_allow_html=True)
 
-# Titre
+# Titre principal
 st.markdown("<h1>Outil de Matching de Pièces Auto</h1>", unsafe_allow_html=True)
 
-# Bloc principal
+# Zone de travail principale
 with st.container():
     st.markdown('<div class="upload-section">', unsafe_allow_html=True)
 
-    st.markdown('<div class="label">📁 Téléversez le premier fichier Excel</div>', unsafe_allow_html=True)
-    fichier1 = st.file_uploader("", type=["xlsx"], key="fichier1", label_visibility="collapsed")
+    st.markdown('<div class="label">Téléversez le premier fichier Excel</div>', unsafe_allow_html=True)
+    fichier1 = st.file_uploader("Téléversez le premier fichier Excel", type=["xlsx"], key="fichier1")
 
-    st.markdown('<div class="label">📁 Téléversez le second fichier Excel</div>', unsafe_allow_html=True)
-    fichier2 = st.file_uploader("", type=["xlsx"], key="fichier2", label_visibility="collapsed")
+    st.markdown('<div class="label">Téléversez le second fichier Excel</div>', unsafe_allow_html=True)
+    fichier2 = st.file_uploader("Téléversez le second fichier Excel", type=["xlsx"], key="fichier2")
 
     if fichier1 and fichier2:
         df1 = pd.read_excel(fichier1)
         df2 = pd.read_excel(fichier2)
 
-        colonne1 = st.selectbox("🔹 Choisissez la colonne de référence dans le fichier 1 :", df1.columns)
-        colonne2 = st.selectbox("🔹 Choisissez la colonne de référence dans le fichier 2 :", df2.columns)
+        colonne1 = st.selectbox("🔹 Colonne de référence du fichier 1 :", df1.columns)
+        colonne2 = st.selectbox("🔹 Colonne de référence du fichier 2 :", df2.columns)
 
         if st.button("🔍 Lancer le matching"):
             df1[colonne1] = df1[colonne1].astype(str).str.strip().str.upper()
