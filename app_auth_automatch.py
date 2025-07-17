@@ -3,27 +3,34 @@ import pandas as pd
 from io import BytesIO
 from PIL import Image
 import yaml
-from streamlit_authenticator import Authenticate
-from passlib.hash import pbkdf2_sha256
+from yaml.loader import SafeLoader
+import streamlit_authenticator as stauth
 
-# --- Authentification ---
-with open("config.yaml") as file:
-    config = yaml.safe_load(file)
+# Chargement de la configuration
+with open('config.yaml') as file:
+    config = yaml.load(file, Loader=SafeLoader)
 
-authenticator = Authenticate(
+# Authentification
+authenticator = stauth.Authenticate(
     config['credentials'],
     config['cookie']['name'],
     config['cookie']['key'],
-    config['cookie']['expiry_days']
+    config['cookie']['expiry_days'],
 )
 
-name, authentication_status, username = authenticator.login(st, "main")
+name, authentication_status, username = authenticator.login("Se connecter", location="main")
 
-if authentication_status:
+if authentication_status is False:
+    st.error("Nom d’utilisateur ou mot de passe incorrect")
+elif authentication_status is None:
+    st.warning("Veuillez entrer vos identifiants")
+elif authentication_status:
+    st.success(f"Bienvenue {name} 👋")
+
+    # App principale
     st.set_page_config(page_title="AUTOMATCH - Outil de Matching de Pièces Auto", layout="centered")
 
-    # CSS et logo
-    st.markdown("""
+    custom_css = """
     <style>
     body {
         background-color: #F5F5F5;
@@ -64,7 +71,8 @@ if authentication_status:
         padding-top: 0 !important;
     }
     </style>
-    """, unsafe_allow_html=True)
+    """
+    st.markdown(custom_css, unsafe_allow_html=True)
 
     st.markdown('<div class="center-logo">', unsafe_allow_html=True)
     logo = Image.open("logo-automatch-bleu.png")
@@ -109,11 +117,7 @@ if authentication_status:
                     file_name="résultat_matching.xlsx",
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
+
         st.markdown('</div>', unsafe_allow_html=True)
 
     st.markdown('<footer>© 2025 AUTOMATCH - Tous droits réservés</footer>', unsafe_allow_html=True)
-
-elif authentication_status is False:
-    st.error("Nom d’utilisateur ou mot de passe incorrect.")
-elif authentication_status is None:
-    st.warning("Veuillez entrer vos identifiants.")
