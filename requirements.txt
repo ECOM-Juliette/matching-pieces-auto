@@ -1,5 +1,7 @@
-pillow
+
 streamlit
 pandas
 openpyxl
+Pillow
+pyyaml
 streamlit-authenticator
