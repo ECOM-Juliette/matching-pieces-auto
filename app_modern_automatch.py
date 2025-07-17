@@ -50,7 +50,7 @@ st.markdown(modern_css, unsafe_allow_html=True)
 
 # Logo centré
 logo = Image.open("logo-automatch-bleu.png")
-st.image(logo, width=200)
+st.image(logo, width=500)
 
 # Titre
 st.markdown("<h1>Outil de Matching de Pièces Auto</h1>", unsafe_allow_html=True)
