@@ -104,8 +104,9 @@ elif authentication_status:
                 df1[colonne1] = df1[colonne1].astype(str).str.strip().str.upper()
                 df2[colonne2] = df2[colonne2].astype(str).str.strip().str.upper()
 
+                # ✅ Nouveau comportement : ne match que si la cellule n’est pas vide
                 df2["Résultat du matching"] = df2[colonne2].apply(
-                    lambda x: "match" if x in df1[colonne1].values else ""
+                    lambda x: "match" if pd.notna(x) and x != "" and x in df1[colonne1].values else ""
                 )
 
                 st.success(f"✅ Matching terminé. {df2['Résultat du matching'].value_counts().get('match', 0)} correspondance(s) trouvée(s).")
@@ -119,10 +120,10 @@ elif authentication_status:
                 st.download_button(
                     label="📥 Télécharger le fichier de résultats",
                     data=output,
-                    file_name="resultat_matching.xlsx",
+                    file_name="match_your_sheets_result.xlsx",
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
 
         st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown('<footer>© 2025 Match Your Sheets - Tous droits réservés</footer>', unsafe_allow_html=True)
+    st.markdown('<footer>© 2025 Match Your Sheets — Simplifiez vos comparaisons de données</footer>', unsafe_allow_html=True)
