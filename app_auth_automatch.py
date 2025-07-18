@@ -87,11 +87,11 @@ elif authentication_status:
     with st.container():
         st.markdown('<div class="upload-section">', unsafe_allow_html=True)
 
-        st.markdown('<div class="label">Téléversez le premier fichier Excel</div>', unsafe_allow_html=True)
-        fichier1 = st.file_uploader("Téléversez le premier fichier Excel", type=["xlsx"], key="fichier1")
+        st.markdown('<div class="label">Téléversez votre fichier Excel</div>', unsafe_allow_html=True)
+        fichier1 = st.file_uploader("Téléversez votre fichier Excel", type=["xlsx"], key="fichier1")
 
-        st.markdown('<div class="label">Téléversez le second fichier Excel</div>', unsafe_allow_html=True)
-        fichier2 = st.file_uploader("Téléversez le second fichier Excel", type=["xlsx"], key="fichier2")
+        st.markdown('<div class="label">Téléversez le fichier à comparer</div>', unsafe_allow_html=True)
+        fichier2 = st.file_uploader("Téléversez le fichier à comparer", type=["xlsx"], key="fichier2")
 
         if fichier1 and fichier2:
             df1 = pd.read_excel(fichier1)
