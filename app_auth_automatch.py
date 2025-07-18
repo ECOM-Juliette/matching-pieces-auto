@@ -28,7 +28,7 @@ elif authentication_status:
     st.success(f"Bienvenue {name} 👋")
 
     # Configuration de la page
-    st.set_page_config(page_title="AUTOMATCH - Outil de Matching de Pièces Auto", layout="centered")
+    st.set_page_config(page_title="Match Your Sheets - Outil de comparaison de fichiers", layout="centered")
 
     custom_css = """
     <style>
@@ -81,31 +81,29 @@ elif authentication_status:
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Titre
-    st.markdown("<h1>Outil de Matching de Pièces Auto</h1>", unsafe_allow_html=True)
+    st.markdown("<h1>Match Your Sheets</h1>", unsafe_allow_html=True)
 
     # Interface utilisateur
     with st.container():
         st.markdown('<div class="upload-section">', unsafe_allow_html=True)
 
-        st.markdown('<div class="label">Téléversez votre fichier Excel</div>', unsafe_allow_html=True)
-        fichier1 = st.file_uploader("Téléversez votre fichier Excel", type=["xlsx"], key="fichier1")
+        st.markdown('<div class="label">Téléversez votre premier fichier (.xlsx)</div>', unsafe_allow_html=True)
+        fichier1 = st.file_uploader("Fichier de référence", type=["xlsx"], key="fichier1")
 
-        st.markdown('<div class="label">Téléversez le fichier à comparer</div>', unsafe_allow_html=True)
-        fichier2 = st.file_uploader("Téléversez le fichier à comparer", type=["xlsx"], key="fichier2")
+        st.markdown('<div class="label">Téléversez le second fichier à comparer (.xlsx)</div>', unsafe_allow_html=True)
+        fichier2 = st.file_uploader("Fichier à comparer", type=["xlsx"], key="fichier2")
 
         if fichier1 and fichier2:
             df1 = pd.read_excel(fichier1)
             df2 = pd.read_excel(fichier2)
 
-            colonne1 = st.selectbox("🔹 Colonne de référence du fichier 1 :", df1.columns)
-            colonne2 = st.selectbox("🔹 Colonne de référence du fichier 2 :", df2.columns)
+            colonne1 = st.selectbox("🔹 Colonne de référence du premier fichier :", df1.columns)
+            colonne2 = st.selectbox("🔹 Colonne de comparaison du second fichier :", df2.columns)
 
             if st.button("🔍 Lancer le matching"):
-                # Normalisation des valeurs
                 df1[colonne1] = df1[colonne1].astype(str).str.strip().str.upper()
                 df2[colonne2] = df2[colonne2].astype(str).str.strip().str.upper()
 
-                # Ajout d'une colonne résultat dans le fichier 2
                 df2["Résultat du matching"] = df2[colonne2].apply(
                     lambda x: "match" if x in df1[colonne1].values else ""
                 )
@@ -113,20 +111,18 @@ elif authentication_status:
                 st.success(f"✅ Matching terminé. {df2['Résultat du matching'].value_counts().get('match', 0)} correspondance(s) trouvée(s).")
                 st.dataframe(df2)
 
-                # Export
                 output = BytesIO()
                 with pd.ExcelWriter(output, engine='openpyxl') as writer:
                     df2.to_excel(writer, index=False, sheet_name="Matching")
                 output.seek(0)
 
                 st.download_button(
-                    label="📥 Télécharger le fichier Excel",
+                    label="📥 Télécharger le fichier de résultats",
                     data=output,
-                    file_name="résultat_matching.xlsx",
+                    file_name="resultat_matching.xlsx",
                     mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"
                 )
 
         st.markdown('</div>', unsafe_allow_html=True)
 
-    # Pied de page
-    st.markdown('<footer>© 2025 AUTOMATCH - Tous droits réservés</footer>', unsafe_allow_html=True)
+    st.markdown('<footer>© 2025 Match Your Sheets - Tous droits réservés</footer>', unsafe_allow_html=True)
