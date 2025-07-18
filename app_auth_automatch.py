@@ -76,7 +76,7 @@ elif authentication_status:
 
     # Logo
     st.markdown('<div class="center-logo">', unsafe_allow_html=True)
-    logo = Image.open("logo-automatch-bleu.png")
+    logo = Image.open("match-your-sheets.png")
     st.image(logo, width=500)
     st.markdown('</div>', unsafe_allow_html=True)
 
