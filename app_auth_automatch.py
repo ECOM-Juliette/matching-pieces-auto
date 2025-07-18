@@ -81,7 +81,7 @@ elif authentication_status:
     st.markdown('</div>', unsafe_allow_html=True)
 
     # Titre
-    st.markdown("<h1>Match Your Sheets</h1>", unsafe_allow_html=True)
+    st.markdown("<h1>Comparez 2 fichiers en quelques secondes</h1>", unsafe_allow_html=True)
 
     # Interface utilisateur
     with st.container():
