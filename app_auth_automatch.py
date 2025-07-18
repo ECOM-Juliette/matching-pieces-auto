@@ -104,9 +104,9 @@ elif authentication_status:
                 df1[colonne1] = df1[colonne1].astype(str).str.strip().str.upper()
                 df2[colonne2] = df2[colonne2].astype(str).str.strip().str.upper()
 
-                # ✅ Nouveau comportement : ne match que si la cellule n’est pas vide
+                # ✅ Condition mise à jour : match uniquement si la cellule n'est pas vide ou NaN
                 df2["Résultat du matching"] = df2[colonne2].apply(
-                    lambda x: "match" if pd.notna(x) and x != "" and x in df1[colonne1].values else ""
+                    lambda x: "match" if pd.notna(x) and str(x).strip() != "" and str(x).upper() in df1[colonne1].values else "pas de match"
                 )
 
                 st.success(f"✅ Matching terminé. {df2['Résultat du matching'].value_counts().get('match', 0)} correspondance(s) trouvée(s).")
